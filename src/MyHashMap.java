@@ -57,7 +57,6 @@ public class MyHashMap<K extends Comparable<K>, V> implements MyMap<K, V> {
     @Override
     public V get(K key) {
         int index = Math.abs(key.hashCode()) % table.length;
-        MapEntry<K, V> chain = table[index];
         if(table[index] == null){
             return null;
         }
@@ -89,13 +88,14 @@ public class MyHashMap<K extends Comparable<K>, V> implements MyMap<K, V> {
         int index = Math.abs(key.hashCode()) % table.length;
         //if the table at that index is null
         //then just set that index to the new entry
-        if(table[index] == null){
+        MapEntry<K, V> chain = table[index];
+        if(chain == null){
             table[index] = n;
             numEntries++;
             return null;
         }
         else{
-            MapEntry<K, V> pointer = table[index];
+            MapEntry<K, V> pointer = chain;
             MapEntry<K, V> curr = null;
             //iterates through entries till it reaches the end
             while(pointer != null){
@@ -136,11 +136,12 @@ public class MyHashMap<K extends Comparable<K>, V> implements MyMap<K, V> {
             MapEntry<K, V> entry = entriesToRehash[i];
             K key = entry.key;
             int in = Math.abs(key.hashCode()) % table.length;
-            if(table[in] == null){
+            MapEntry<K, V> chain = table[in];
+            if(chain == null){
                 table[in] = entry;
             }
             else{
-                MapEntry<K, V> curr = table[in];
+                MapEntry<K, V> curr = chain;
                 MapEntry<K, V> prev = null;
                 while(curr != null){
                     prev = curr;

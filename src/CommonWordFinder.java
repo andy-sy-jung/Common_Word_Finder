@@ -12,7 +12,14 @@ import java.util.Iterator;
 
 public class CommonWordFinder {
 
-    private static String[] validDataStructures = {"avl", "hash", "bst"};
+    int userLimit;
+    MyMap<String, Integer> userMap;
+
+    public CommonWordFinder() {
+        this.userLimit = 10;
+        this.userMap = null;
+    }
+    public static String[] validDataStructures = {"avl", "hash", "bst"};
 
     /**
      * Returns true if string entered in matches any of the strings in the ValidDataStructures array
@@ -159,11 +166,6 @@ public class CommonWordFinder {
             System.out.print(number + commonWord + System.lineSeparator());
         }
     }
-
-    /**
-     * Empty constructor
-     */
-    public CommonWordFinder() { }
 
     public static void main(String[] args){
         // checks whether the command line arguments are formatted correctly

@@ -16,8 +16,6 @@ public class CommonWordFinder {
     MyMap<String, Integer> userMap;
 
     public CommonWordFinder() {
-        this.userLimit = 10;
-        this.userMap = null;
     }
     public static String[] validDataStructures = {"avl", "hash", "bst"};
 
@@ -165,6 +163,40 @@ public class CommonWordFinder {
             String commonWord = String.format(wordFormat, word) + occurrence;
             System.out.print(number + commonWord + System.lineSeparator());
         }
+    }
+
+    /**
+     * takes the sorted array of most common words and returns a single string that contains the list.
+     * @param limit the number of most common words to be printed
+     * @param arrayOfWords the sorted array of most common words
+     */
+    public static String stringOfMostCommonWords(int limit, Entry<String, Integer>[] arrayOfWords){
+        // checking to see what the longest word is in the list that is to be printed
+        int trailingSpace = 0;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < limit; i++) {
+            if (trailingSpace < arrayOfWords[i].key.length()) {
+                trailingSpace = arrayOfWords[i].key.length();
+            }
+        }
+        // add one to account for space between occurrence and word
+        trailingSpace++;
+        // the leading space for the numbers of the list
+        int leadingSpace = String.valueOf(limit).length();
+        // iterate through the array until the limit
+        for(int i = 0; i < limit; i++){
+            // String.format was referenced from https://www.javatpoint.com/java-string-format
+            String word = arrayOfWords[i].key;
+            int occurrence = arrayOfWords[i].value;
+            // right justify number to the biggest number that will appear
+            String numberFormat = "%" + leadingSpace + "d";
+            String number = String.format(numberFormat, i+1) + ". ";
+            // left justify the words with the longest word that will appear
+            String wordFormat = "%-" + trailingSpace + "s";
+            String commonWord = String.format(wordFormat, word) + occurrence;
+            sb.append(number).append(commonWord).append(System.lineSeparator());
+        }
+        return sb.toString();
     }
 
     public static void main(String[] args){
